@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle,CardContent, CardDescription, CardAction, CardFooter} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle,CardContent} from "@/components/ui/card";
 import { BusTimetableEntry } from "@/lib/transperth";
 import { IconPlayerRecordFilled} from "@tabler/icons-react"
 

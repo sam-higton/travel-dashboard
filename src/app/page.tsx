@@ -14,7 +14,7 @@ export default function Home() {
         <Timezone city="Australia/Perth" />
         <Timezone city="Europe/London" />
         <div className="row-span-4 h-full"> 
-          <WeatherForecast city="Perth" />
+          <WeatherForecast city="Australia/Perth" />
         </div>
         <div className="h-full">
           <RefreshButton />

@@ -1,11 +1,11 @@
-import { Card, CardHeader, CardTitle,CardContent, CardDescription, CardAction, CardFooter} from "@/components/ui/card";
-import { IconTrendingDown, IconTrendingUp, IconCloudRain, IconSun } from "@tabler/icons-react"
+import { Card, CardHeader, CardTitle,CardContent} from "@/components/ui/card";
 import { weeklyForecast } from "@/lib/weather";
 import WeatherIcon from "./weather-icon";
+import React from 'react';
 
-export default async function WeatherForecast({city, daysAhead = 7}:{city:string, daysAhead?: number}) {
+export default async function WeatherForecast({city}:{city:string}) {
 
-    const {forecast}  = await weeklyForecast('Australia/Perth');
+    const {forecast}  = await weeklyForecast(city);
 
 
     return (
@@ -15,7 +15,7 @@ export default async function WeatherForecast({city, daysAhead = 7}:{city:string
         </CardHeader>
         <CardContent className=''>
             {forecast.map(day => (
-              <>
+              <React.Fragment key={day.date}>
               <div className="border-b-2 border-grey-500 py-3">
                 <div>{day.date}</div>
                 <div className="grid grid-cols-2">
@@ -27,7 +27,7 @@ export default async function WeatherForecast({city, daysAhead = 7}:{city:string
                   </div>
                 </div>
               </div>
-              </>
+              </React.Fragment>
             ))}
           
         </CardContent>

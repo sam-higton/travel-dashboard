@@ -40,7 +40,7 @@ export async function fetchTrainTimes(station:string, trainline: string, terminu
 function parseTimetablePage(html:string, type: 'train' | 'bus'):BusTimetableEntry[] {
 
     const dom = new JSDOM(html);
-    let entries:BusTimetableEntry[] = []
+    const entries:BusTimetableEntry[] = []
     dom.window.document.querySelectorAll('#pnlStopTimetable .tpm_row_timetable_wrap').forEach((entry) => {
       const isLive = entry.querySelector('.tt-livetext') !== null;
       let serviceNo = '';
