@@ -1,6 +1,10 @@
 import jsdom from 'jsdom';
-import puppeteer from 'puppeteer';
+import puppeteer, { Browser as PuppeteerBrowser }  from 'puppeteer';
+import puppeteerCore, { Browser as CoreBrowser } from "puppeteer-core";
+import chromium from "@sparticuz/chromium-min";
 const {JSDOM} = jsdom;
+
+export const dynamic = 'force-dynamic';
 
 export type BusTimetableEntry = {
     isLive: boolean,
@@ -8,6 +12,30 @@ export type BusTimetableEntry = {
     timeToArrive: string,
     scheduledTime: string
   }
+
+  const remoteExecutablePath =
+  "https://github.com/Sparticuz/chromium/releases/download/v121.0.0/chromium-v121.0.0-pack.tar";
+  
+  let browser: PuppeteerBrowser | CoreBrowser | undefined;
+
+  async function getBrowser():Promise<PuppeteerBrowser | CoreBrowser> {
+
+    if (browser) return browser;
+   
+   if (process.env.NEXT_PUBLIC_VERCEL_ENVIRONMENT === 'production') {
+      browser = await puppeteerCore.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(remoteExecutablePath),
+      headless: true,
+    });
+    } else {
+      browser = await puppeteer.launch({
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      headless: true,
+    });
+    }
+    return browser;
+}
 
 export async function fetchBusStopTimes(stopNo:number):Promise<BusTimetableEntry[]> {
     const response = await fetch(`https://136213.mobi/RealTime/RealTimeStopResults.aspx?SN=${stopNo}`)
@@ -18,7 +46,7 @@ export async function fetchBusStopTimes(stopNo:number):Promise<BusTimetableEntry
 }
 
 export async function fetchTrainTimes(station:string, trainline: string, terminus: string):Promise<BusTimetableEntry[]> {
-    const browser = await puppeteer.launch()
+    const browser = await getBrowser();
     const page = await browser.newPage()
     await page.goto(`https://136213.mobi/RealTime/RealTimeStopResults.aspx?station=${station}&trainline=${trainline}`)
     const html = await page.content();
