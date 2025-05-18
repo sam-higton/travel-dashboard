@@ -2,8 +2,10 @@ import { Card, CardHeader, CardTitle,CardContent} from "@/components/ui/card";
 import { weeklyForecast } from "@/lib/weather";
 import WeatherIcon from "./weather-icon";
 import React from 'react';
+import { unstable_noStore } from 'next/cache';
 
 export default async function WeatherForecast({city}:{city:string}) {
+    unstable_noStore();
 
     const {forecast}  = await weeklyForecast(city);
 
