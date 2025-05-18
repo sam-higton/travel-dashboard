@@ -2,12 +2,12 @@ import { Card, CardHeader, CardTitle,CardContent} from "@/components/ui/card";
 import { currentTime } from "@/lib/time";
 import { currentWeather } from "@/lib/weather";
 import WeatherIcon from "./weather-icon";
+import { unstable_noStore } from 'next/cache';
 
 export default async function Timezone({city}:{city: string} ){
+    unstable_noStore();
 
     const weather = await currentWeather(city);
-
-    console.log('what is weather?', weather)
 
     return (
       <Card>

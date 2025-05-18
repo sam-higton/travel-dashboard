@@ -38,7 +38,7 @@ export type BusTimetableEntry = {
 }
 
 export async function fetchBusStopTimes(stopNo:number):Promise<BusTimetableEntry[]> {
-    const response = await fetch(`https://136213.mobi/RealTime/RealTimeStopResults.aspx?SN=${stopNo}`)
+    const response = await fetch(`https://136213.mobi/RealTime/RealTimeStopResults.aspx?SN=${stopNo}`, {next: {revalidate: 60}})
     const responseText = await response.text()
     const entries = parseTimetablePage(responseText, 'bus');
 

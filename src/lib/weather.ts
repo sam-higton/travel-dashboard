@@ -58,7 +58,7 @@ interface WeatherResponse {
       const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code`;
       
       // Fetch weather data
-      const response = await fetch(url);
+      const response = await fetch(url, {next: {revalidate: 60}});
       
       if (!response.ok) {
         throw new Error(`Weather API responded with status: ${response.status}`);
