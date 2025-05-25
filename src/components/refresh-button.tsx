@@ -8,9 +8,9 @@ export default function RefreshButton() {
       window.location.reload();
     }
 
-    useEffect(() => {
-        setTimeout(refresh, 60000)
-    },[])
+    // useEffect(() => {
+    //     setTimeout(refresh, 60000)
+    // },[])
 
     return (
         <Card className="bg-green-500 cursor-pointer h-full flex flex-col relative" onClick={refresh}>

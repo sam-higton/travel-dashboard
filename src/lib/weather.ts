@@ -5,7 +5,7 @@ interface WeatherResponse {
     };
   }
   
-  interface WeatherResult {
+  export interface WeatherResult {
     temperature: number;
     status: string;
   }
